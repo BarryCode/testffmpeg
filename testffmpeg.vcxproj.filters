@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegAdapter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRecorder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegFrameRecorder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BitMapParse.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegDemux.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegParseImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegUtil.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegVideo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="demux.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegOperation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegMedia.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegAudio.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FFMpegMixAudio.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="testffmpeg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegAdapter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameRecorder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegFrameRecorder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BitMapParse.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegDemux.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegParseImage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegImage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegUtil.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegVideo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="demux.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegOperation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegMedia.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegAudio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mixSound.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegLibTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FFMpegMixAudio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
