@@ -53,7 +53,7 @@ void FFMpegOperation::SplitVideoIntoImages(const char* src_file, int number)
                 image->SetInputFrame(video->GetInputFrame());
                 image->SetCurFrameType(FFMpegMedia::EVideo);
                 if(i<number){
-                    sprintf(imagename,"F:\\testfiles\\picture\\image%d.bmp",i);
+                    sprintf(imagename,"F:\\tutu\\testfiles\\picture\\image%d.bmp",i);
                     image->OpenOutputFile(imagename);
                     image->EncodeFrame();
                     image->SaveFrame();
@@ -139,7 +139,7 @@ void FFMpegOperation::SplitVideo(const char* src_file, int64_t start_ts, int64_t
     FFMpegMedia* video = new FFMpegVideo();
     video->LoadInputFileInfo(src_file);
 
-    video->InitialOutputFmtCtx("F:\\testfiles\\video\\mytest.f4v");
+    video->InitialOutputFmtCtx("F:\\tutu\\testfiles\\video\\mytest.f4v");
     video->InitialNewAudioStream();
     
     video->CopyAndOpenOutputVideoCodecCtx(video->GetInputVideoCodecCtx());
@@ -181,7 +181,7 @@ void FFMpegOperation::MixVideoWithNewAudio(const char* src_video_file,
 //    FFMpegMedia* input_audio = new FFMpegAudio();
 //    input_audio->LoadInputFileInfo(src_file_a);
 //
-//    video->InitialOutputFmtCtx("F:\\testfiles\\video\\mytest.f4v");
+//    video->InitialOutputFmtCtx("F:\\tutu\\testfiles\\video\\mytest.f4v");
 //    video->InitialNewAudioStream();
 //    
 //    video->CopyAndOpenOutputVideoCodecCtx(video->GetInputVideoCodecCtx());
