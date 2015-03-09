@@ -267,44 +267,44 @@ void getMixAudio()
 	avcodec_free_frame(&out_frame_);
 }
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-    int ret;
-    AVPacket packet;
-    AVFrame frame;
-    int got_frame;
-
-     //if (argc != 2) {
-     //    fprintf(stderr, "Usage: %s file | %s\n", argv[0], argv[1]);
-     //    exit(1);
-     //}
-
-    avcodec_register_all();
-    av_register_all();
-    avfilter_register_all();
-
-    f = fopen("F:\\testfiles\\music\\a.mp3","wb");
-
-	//InitializeCriticalSection(&crt);
-	//InitializeCriticalSection(&crt_mix);
-
-    ret = open_input_file("F:\\testfiles\\music\\12.mp3", fmt_ctx1, dec_ctx1);
-    ret = open_input_file("F:\\testfiles\\music\\13.mp3", fmt_ctx2, dec_ctx2);
-    ret = init_filters(filter_descr);
-
-	//分别处理输入
-	//CreateThread(NULL, 0, audio_first, NULL, 0, 0);
-	//CreateThread(NULL, 0, audio_second, NULL, 0, 0);
-	//CreateThread(NULL, 0, audio_third, NULL, 0, 0);
-    getAudio(fmt_ctx1, dec_ctx1, frame1, buffersrc_ctx1);
-    getAudio(fmt_ctx2, dec_ctx2, frame2, buffersrc_ctx2);
-
-	getMixAudio();
-	//Sleep(30000);
-
-    fclose(f);
-    exit(0);
-}
+//int _tmain(int argc, _TCHAR* argv[])
+//{
+//    int ret;
+//    AVPacket packet;
+//    AVFrame frame;
+//    int got_frame;
+//
+//     //if (argc != 2) {
+//     //    fprintf(stderr, "Usage: %s file | %s\n", argv[0], argv[1]);
+//     //    exit(1);
+//     //}
+//
+//    avcodec_register_all();
+//    av_register_all();
+//    avfilter_register_all();
+//
+//    f = fopen("F:\\testfiles\\music\\a.mp3","wb");
+//
+//	//InitializeCriticalSection(&crt);
+//	//InitializeCriticalSection(&crt_mix);
+//
+//    ret = open_input_file("F:\\testfiles\\music\\12.mp3", fmt_ctx1, dec_ctx1);
+//    ret = open_input_file("F:\\testfiles\\music\\13.mp3", fmt_ctx2, dec_ctx2);
+//    ret = init_filters(filter_descr);
+//
+//	//分别处理输入
+//	//CreateThread(NULL, 0, audio_first, NULL, 0, 0);
+//	//CreateThread(NULL, 0, audio_second, NULL, 0, 0);
+//	//CreateThread(NULL, 0, audio_third, NULL, 0, 0);
+//    getAudio(fmt_ctx1, dec_ctx1, frame1, buffersrc_ctx1);
+//    getAudio(fmt_ctx2, dec_ctx2, frame2, buffersrc_ctx2);
+//
+//	getMixAudio();
+//	//Sleep(30000);
+//
+//    fclose(f);
+//    exit(0);
+//}
 
 void open_mp3_encodec()
 {

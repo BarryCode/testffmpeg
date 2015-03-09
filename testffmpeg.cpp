@@ -68,70 +68,26 @@
 #include "FFMpegImage.h"
 #include "FFMpegVideo.h"
 #include "FFMpegOperation.h"
+#include "FFMpegAdapter.h"
+
 
 int main(int argc, char **argv)
 {
-    //char * filename = new char(100);
-    //Image image;
-    //FFMpegFrameRecorder* recorder = new FFMpegFrameRecorder("myTest.H264");
-
-    //recorder->init();
-    //recorder->start();
-    ////BitMapParse* bmp = new BitMapParse();
-    ////for(int i=0; i<5; i++){
-    //    //sprintf(filename,"F:\\tutu\\testfiles\\test4.bmp");
-    //    //bmp->Parse(filename, &image);
-
-    //    recorder->readImage("F:\\tutu\\testfiles\\test4.bmp");
-    ////}
-    //recorder->stop();
-    //
-    //////delete bmp;
-    //delete recorder;
-    ////delete filename;
-    //video_to_pictures("F:\\²âÊÔÊÓÆµ\\×·×Ù¶ÔÏó_½Å.mp4", 10);
-    //pictures_to_video("myTest.h264", AV_CODEC_ID_H264);
-
-    //FFMpegDemux* demux = new FFMpegDemux("F:\\tutu\\testfiles\\test4.bmp","F:\\tutu\\testfiles\\result.MOV");
-    //demux->init();
-    //demux->openInputFile();
-    //demux->openOutputFile();
-    //demux->demux();
-    //demux->close();
-
-    //FFMpegParseImage* parse = new FFMpegParseImage();
-    //parse->openImageFile("F:\\tutu\\testfiles\\picture\\pic_png\\2_0.png");
-    ////parse->initialOutputVideoFile("F:\\tutu\\testfiles\\mytest.h264");
-    //parse->decodeImageData();
-    //parse->close();
-    //delete parse;
-
-    //FFMpegImage* image = new FFMpegImage();
-    //image->LoadInputFile("F:\\tutu\\testfiles\\picture\\2_0.png");
-    //image->ReadFrame();
-    //image->LoadOutputFile("F:\\tutu\\testfiles\\picture\\0temp.png");
-    //image->EncodeFrame();
-    //image->WriteFrame(true);
-    //delete image;
-        
-    
-    //FFMpegVideo* video = new FFMpegVideo();
-    //video->LoadInputFile("F:\\²âÊÔÊÓÆµ\\×·×Ù¶ÔÏó_±íÑÝÕßÄÔ´ü.mp4");
-    //video->InitialOutputContext(".bmp");
-    //video->SplitInputVideoIntoImages(10);
-    //delete video;
 
     //FFMpegOperation::ConvertImages("F:\\tutu\\testfiles\\picture\\che0.jpg","F:\\tutu\\testfiles\\picture\\0temp.bmp");
     //FFMpegOperation::ConvertImages("F:\\tutu\\testfiles\\picture\\0temp.bmp","F:\\tutu\\testfiles\\picture\\0temp.png");
     //FFMpegOperation::ConvertImages("F:\\tutu\\testfiles\\picture\\0temp.bmp","F:\\tutu\\testfiles\\picture\\0temp.jpg");
     //FFMpegOperation::ConvertImages("F:\\tutu\\testfiles\\picture\\0temp.png","F:\\tutu\\testfiles\\picture\\0temp.jpg");//fail
-    //FFMpegOperation::SplitVideoIntoImages("F:\\tutu\\testfiles\\video\\hand.mp4", 15);
-    //FFMpegOperation::SplitVideoIntoImages("F:\\tutu\\testfiles\\video\\hand.mp4", 15);
+
+    //video_to_pictures("F:\\tutu\\testfiles\\video\\hand.mp4", 15);
+
+    FFMpegOperation::SplitVideoIntoImages("F:\\tutu\\testfiles\\video\\hand.mp4", 15);
+    //FFMpegOperation::SplitVideoIntoImages("F:\\tutu\\testfiles\\video\\IMG_1248.MOV", 15);
     
     //const char* imagefiles[15] = {
     //    "F:\\tutu\\testfiles\\picture\\che0.jpg",
     //    "F:\\tutu\\testfiles\\picture\\che1.jpg",
-    //    "F:\\tutu\\testfiles\\picture\\che2.jpg",
+    //    "F:\\tutu\\testfiles\\picture\\image2.bmp",
     //    "F:\\tutu\\testfiles\\picture\\che3.jpg",
     //    "F:\\tutu\\testfiles\\picture\\che4.jpg",
     //    "F:\\tutu\\testfiles\\picture\\che5.jpg",
@@ -163,17 +119,46 @@ int main(int argc, char **argv)
     //    "F:\\tutu\\testfiles\\picture\\image14.bmp"};
     //FFMpegOperation::MergeImagesIntoVideo(imagefiles,15,"F:\\tutu\\testfiles\\video\\mytestimage.h264");
 
-    //FFMpegOperation::DemuxVideoWithoutCodec("F:\\tutu\\testfiles\\video\\hand.mp4");
-    //FFMpegOperation::DemuxVideoWithoutCodec("F:\\tutu\\testfiles\\video\\face.f4v");
-    //FFMpegOperation::DemuxVideoWithoutCodec("F:\\tutu\\testfiles\\video\\IMG_1248.MOV");
+    //FFMpegOperation::DemuxVideoWithoutCodec("F:\\tutu\\testfiles\\video\\hand.mp4",
+    //    "F:\\tutu\\testfiles\\video\\hand_without_audio.mp4",
+    //    "F:\\tutu\\testfiles\\video\\hand_audio.m4a");
+    //FFMpegOperation::DemuxVideoWithoutCodec("F:\\tutu\\testfiles\\video\\face.f4v",
+    //    "F:\\tutu\\testfiles\\video\\face_without_audio.f4v",
+    //    "F:\\tutu\\testfiles\\video\\face_audio.m4a");
+    //FFMpegOperation::DemuxVideoWithoutCodec("F:\\tutu\\testfiles\\video\\IMG_1248.MOV",
+    //    "F:\\tutu\\testfiles\\video\\IMG_1248_without_audio.f4v",
+    //    "F:\\tutu\\testfiles\\video\\IMG_1248_audio.m4a");
 
     //FFMpegOperation::SplitVideo("F:\\tutu\\testfiles\\video\\face.f4v", 30000, 80000);
 
-    FFMpegOperation::MixAudios("F:\\tutu\\testfiles\\music\\12.mp3", "F:\\tutu\\testfiles\\music\\13.mp3", "F:\\tutu\\testfiles\\music\\a.aac");
+    //FFMpegOperation::MixAudios("F:\\tutu\\testfiles\\music\\15.m4a", 
+    //    "F:\\tutu\\testfiles\\music\\16.m4a", 
+    //    "F:\\tutu\\testfiles\\music\\a.aac");
+    //FFMpegOperation::MixAudios("F:\\tutu\\testfiles\\music\\15.m4a", 
+    //    "F:\\tutu\\testfiles\\music\\16.m4a", 
+    //    "F:\\tutu\\testfiles\\music\\a.mp3");
+    //FFMpegOperation::MixAudios("F:\\tutu\\testfiles\\music\\13.mp3", 
+    //    "F:\\tutu\\testfiles\\music\\14.mp3", 
+    //    "F:\\tutu\\testfiles\\music\\b.mp3");
+    //FFMpegOperation::MixAudios("F:\\tutu\\testfiles\\music\\13.mp3", 
+    //    "F:\\tutu\\testfiles\\music\\14.mp3", 
+    //    "F:\\tutu\\testfiles\\music\\b.aac");
+
+    //FFMpegOperation::MuxVideoAndAudio("F:\\tutu\\testfiles\\video\\face.f4v",
+    //    "F:\\tutu\\testfiles\\music\\14.mp3",
+    //    "F:\\tutu\\testfiles\\video\\face_new_audio.f4v");
+    //FFMpegOperation::MuxVideoAndAudio("F:\\tutu\\testfiles\\video\\VID20150202001.mp4",
+    //    "F:\\tutu\\testfiles\\music\\13.mp3",
+    //    "F:\\tutu\\testfiles\\video\\VID20150202001_new_audio.mp4");
+    //FFMpegOperation::MuxVideoAndAudio("F:\\tutu\\testfiles\\video\\VID20150202001.mp4",
+    //    "F:\\tutu\\testfiles\\music\\15.m4a",
+    //    "F:\\tutu\\testfiles\\video\\VID20150202001_new_audio.mp4");
+    //FFMpegOperation::MuxVideoAndAudio("F:\\tutu\\testfiles\\video\\IMG_1248.MOV",
+    //    "F:\\tutu\\testfiles\\music\\13.mp3",
+    //    "F:\\tutu\\testfiles\\video\\IMG_1248_new_audio.MOV");//fail
 
 
+    //FFMpegOperation::MixVideoWithNewAudio("F:\\tutu\\testfiles\\video\\hand.mp4", "F:\\tutu\\testfiles\\music\\13.mp3", "F:\\tutu\\testfiles\\video\\a.mp4");//fail
 
-
-    //FFMpegOperation::ConvertAudio("F:\\tutu\\testfiles\\video\\1.mp3", "F:\\tutu\\testfiles\\video\\1.aac");
     return 0;
 }

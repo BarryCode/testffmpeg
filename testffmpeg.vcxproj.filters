@@ -66,6 +66,9 @@
     <ClInclude Include="FFMpegMixAudio.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MediaEditor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -120,6 +123,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FFMpegMixAudio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaEditor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

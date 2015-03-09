@@ -1,8 +1,7 @@
-#ifndef _FFMPEGOPERATION_H_
-#define _FFMPEGOPERATION_H_
+#ifndef _FFMPEG_OPERATION_H_
+#define _FFMPEG_OPERATION_H_
 #include "stdint.h"
 
-#pragma once
 class FFMpegOperation
 {
 public:
@@ -16,8 +15,8 @@ public:
         const char* dst_video_file, const char* dst_audio_file);
     static void SplitVideo(const char* src_file, int64_t start_ts, int64_t end_ts);
     static void MixAudios(const char* src_file1, const char* src_file2, const char* dst_file);
-    static void MuxVideoAndAudio();
-
+    static void MuxVideoAndAudio(const char* src_video_file,
+    const char* src_audio_file, const char* dst_file);
     static void MixVideoWithNewAudio(const char* src_video_file, const char* src_audio_file, const char* dst_file);
     //static void MuxVideoWithoutCodec(const char* src_file_v,const char* src_file_a);
     //

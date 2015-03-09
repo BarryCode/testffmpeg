@@ -88,6 +88,7 @@ private:
     static int OpenInputCodec(const AVMediaType mediaType);
     static int OpenOutputImageFileAndCodecContext(const char* filename);
     static int EncodeAndWriteFrame(AVFrame* frame);
+    static int WriteFrame(AVFrame* frame, int size);
     static void CloseOutputImageFile();
     static int InitFilters(const char *filters_descr);
 

@@ -479,7 +479,7 @@ int video_to_pictures(const char *in_filename, int pic_count)
                 // Save the frame to disk
                 //if (i<pic_count) {
                     char pic[200];
-                    sprintf(pic,"F:\\测试视频\\追踪对象_表演者面部_或手_RGB\\追踪对象_脚\\image%d.bmp",i);
+                    sprintf(pic,"F:\\tutu\\testfiles\\picture\\image%d.bmp",i);
                     i++;
                     //printf("%d/n",*pFrameRGB);
                     if(rotate == 0){

@@ -8,6 +8,8 @@ public:
     ~FFMpegMixAudio(void);
 
     void mix_audios(const char* src_file1, const char* src_file2, const char* dst_file);
+
+    void mux(const char* src_video_file, const char* src_audio_file, const char* dst_file);
     
 private:
     

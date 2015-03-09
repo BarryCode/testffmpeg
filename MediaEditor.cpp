@@ -1,5 +1,3 @@
-#include <assert.h>
-
 #include "StdAfx.h"
 #include "MediaEditor.h"
 
@@ -27,6 +25,7 @@ int MediaEditor::StartDecodeVideo(const char *inFilePath, int outWidth, int outH
 
     av_register_all();
     avcodec_register_all();
+    avfilter_register_all();
 
     if ((ret = OpenInputFile(inFilePath))<0)
         return ret;
@@ -42,24 +41,32 @@ int MediaEditor::StartDecodeVideo(const char *inFilePath, int outWidth, int outH
         oHeight = iHeight;
     }
 
-    //InitFilters();
-
     return ret;
 }
 
 int MediaEditor::GrabOneFrameToImage(const char *outFilePath, int64_t timestamp)
 {
+    char args[50];
     int ret = 0;
     int got_frame;
     AVPacket packet;
     AVFrame* frame= av_frame_alloc();
-
     AVFrame* out_frame = av_frame_alloc();
 
     av_init_packet(&packet);
     packet.data = NULL;
     packet.size = 0;
 
+    ret = OpenOutputImageFileAndCodecContext(outFilePath);
+    
+    //sprintf(args, "format=pix_fmts=bgra");
+    sprintf(args, "crop=%d:%d", oWidth, oHeight);
+    if((ret = InitFilters(args)) < 0){
+        av_log(NULL, AV_LOG_ERROR, "Initial filter failed\n");
+        return ret;
+    }
+
+    ret = av_seek_frame(inputFmtCtx, videoStreamIndex, timestamp, AVSEEK_FLAG_FRAME);
     /* read one video packet */
     while (av_read_frame(inputFmtCtx, &packet) >= 0) {
         if (packet.stream_index == videoStreamIndex) {
@@ -71,62 +78,34 @@ int MediaEditor::GrabOneFrameToImage(const char *outFilePath, int64_t timestamp)
             }
 
             if (got_frame) {
-                ret = OpenOutputImageFileAndCodecContext(outFilePath);
-                
-                // Determine required buffer size and allocate buffer
-                int numBytes = avpicture_get_size((AVPixelFormat)oPixFormat, oWidth, oHeight);
-                uint8_t*buffer = (uint8_t*)av_malloc(numBytes*sizeof(uint8_t));
-                // Assign appropriate parts of buffer to image planes in pFrameRGB
-                avpicture_fill((AVPicture *)out_frame, buffer, (AVPixelFormat)oPixFormat,
-                    oWidth, oHeight);
+                frame->pts = av_frame_get_best_effort_timestamp(frame);
 
-                SwsContext* img_convert_ctx = sws_getContext(iWidth,
-                    iHeight,
-                    (AVPixelFormat)iPixFormat,
-                    oWidth,
-                    oHeight,
-                    (AVPixelFormat)oPixFormat,
-                    SWS_FAST_BILINEAR, NULL,
-                    NULL,
-                    NULL);
+                /* push the decoded frame into the filtergraph */
+                if (av_buffersrc_add_frame_flags(bufferSrcCtx, frame, AV_BUFFERSRC_FLAG_KEEP_REF) < 0) {
+                    av_log(NULL, AV_LOG_ERROR, "Error while feeding the filtergraph\n");
+                    break;
+                }
 
-                ret = sws_scale(img_convert_ctx,
-                    (const uint8_t*  const*)frame->data,
-                    frame->linesize,
-                    0,
-                    oHeight,
-                    out_frame->data,
-                    out_frame->linesize);
-
-                ret = EncodeAndWriteFrame(out_frame);
-                CloseOutputImageFile();
-                //frame->pts = av_frame_get_best_effort_timestamp(frame);
-
-                ///* push the decoded frame into the filtergraph */
-                //if (av_buffersrc_add_frame_flags(buffersrc_ctx, frame, AV_BUFFERSRC_FLAG_KEEP_REF) < 0) {
-                //    av_log(NULL, AV_LOG_ERROR, "Error while feeding the filtergraph\n");
-                //    break;
-                //}
-
-                ///* pull filtered frames from the filtergraph */
-                //while (1) {
-                //    ret = av_buffersink_get_frame(buffersink_ctx, filt_frame);
-                //    if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
-                //        break;
-                //    if (ret < 0)
-                //        goto end;
-                //    display_frame(filt_frame, buffersink_ctx->inputs[0]->time_base);
-                //    av_frame_unref(filt_frame);
-                //}
+                /* pull filtered frames from the filtergraph */
+                while (1) {
+                    ret = av_buffersink_get_frame(bufferSinkCtx, out_frame);
+                    if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+                        break;
+                    if (ret < 0)
+                        return ret;
+                    ret = EncodeAndWriteFrame(out_frame);
+                    av_frame_unref(out_frame);
+                }
                 av_frame_unref(frame);
                 break;
             }
         }
         av_free_packet(&packet);
     }
-
+    CloseOutputImageFile();
     av_frame_free(&frame);
     av_frame_free(&out_frame);
+    avfilter_graph_free(&filterGraph);
 
     return ret;
 }
@@ -145,6 +124,7 @@ void MediaEditor::Destroy()
 {
     avcodec_close(iAudioDecCtx);
     avcodec_close(iVideoDecCtx);
+    avcodec_close(oVideoDecCtx);
     avformat_close_input(&inputFmtCtx);
 }
 
@@ -266,6 +246,19 @@ int MediaEditor::EncodeAndWriteFrame(AVFrame* frame)
     return ret;
 }
 
+int MediaEditor::WriteFrame(AVFrame* frame, int size)
+{
+    int ret = 0;
+
+    if(oFile){
+        if((ret = fwrite(frame->data, 1, size, oFile))<0){
+            return ret;
+        }
+    }
+
+    return ret;
+}
+
 void MediaEditor::CloseOutputImageFile()
 {
     if(oFile != NULL){
@@ -283,7 +276,7 @@ int MediaEditor::InitFilters(const char *filters_descr)
     AVFilterInOut *outputs = avfilter_inout_alloc();
     AVFilterInOut *inputs  = avfilter_inout_alloc();
     AVRational time_base = inputFmtCtx->streams[videoStreamIndex]->time_base;
-    enum AVPixelFormat pix_fmts[] = { AV_PIX_FMT_GRAY8, AV_PIX_FMT_NONE };
+    enum AVPixelFormat pix_fmts[] = { (AVPixelFormat)oPixFormat, AV_PIX_FMT_NONE };
 
     filterGraph = avfilter_graph_alloc();
     if (!outputs || !inputs || !filterGraph) {
@@ -313,7 +306,7 @@ int MediaEditor::InitFilters(const char *filters_descr)
         goto end;
     }
 
-    ret = av_opt_set_int_list(bufferSrcCtx, "pix_fmts", pix_fmts,
+    ret = av_opt_set_int_list(bufferSinkCtx, "pix_fmts", pix_fmts,
                               AV_PIX_FMT_NONE, AV_OPT_SEARCH_CHILDREN);
     if (ret < 0) {
         av_log(NULL, AV_LOG_ERROR, "Cannot set output pixel format\n");
